@@ -8,16 +8,18 @@ function Home({ setIsLoggedIn }) {
   const [fieldValue, setFieldValue] = useState("");
 
   return (
+    // <div><h1>hello world</h1></div>
+   
     <div className="flex flex-col items-center space-y-5 justify-center py-4">
-      {/* Logout Button */}
-      <div className="w-full flex justify-end px-10">
+      Logout Button */
+        <div className="w-full flex justify-end px-10">
         <button
           onClick={() => setIsLoggedIn(false)}
           className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
         >
           Logout
         </button>
-      </div>
+      </div> 
 
       <h1 className="text-4xl font-extrabold text-gray-700 dark:text-gray-100">
         Welcome to the video streaming app

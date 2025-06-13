@@ -31,13 +31,14 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // no localStorage, just in-memory
+ const [isLoggedIn, setIsLoggedIn] = useState(false); // no localStorage, just in-memory
 
   return (
     <Routes>
-      <Route path="/" element={isLoggedIn ? <Home setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />
+      <Route path="/home" element={isLoggedIn ? <Home setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/register" element={<Register />} />
+        {/* <Route path="/home" element={<Home />} /> */}
     </Routes>
   );
 }
