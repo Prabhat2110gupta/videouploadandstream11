@@ -2,6 +2,9 @@ package com.stream.app.spring_stream_backend.Entities;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 @NoArgsConstructor
@@ -22,6 +25,10 @@ public class User {
     private String name;
 
     private String about;
+
+
+
+   ;
 
 }
 

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
@@ -31,8 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.stream.app.spring_stream_backend.AppConstant;
+import com.stream.app.spring_stream_backend.Entities.User;
 import com.stream.app.spring_stream_backend.Entities.Video;
 import com.stream.app.spring_stream_backend.Payload.CustomMessage;
+import com.stream.app.spring_stream_backend.Services.UserService;
 import com.stream.app.spring_stream_backend.Services.VideoService;
 
 
@@ -42,6 +45,8 @@ import com.stream.app.spring_stream_backend.Services.VideoService;
 @CrossOrigin("*")
 public class VideoController {
     private VideoService  videoService;
+     @Autowired
+  private UserService userService;
     public VideoController(VideoService videoService){
         this.videoService=videoService;
     }
@@ -49,12 +54,15 @@ public class VideoController {
     public ResponseEntity<?>create(
         @RequestParam("file")MultipartFile file,
         @RequestParam("title") String title,
-        @RequestParam("description") String description
+        @RequestParam("description") String description,
+        @RequestParam("userId") Integer userId
     ){
          Video video=new Video();
          video.setTitle(title);
          video.setDescription(description);
          video.setVideoId(UUID.randomUUID().toString());
+         video.setUserId(userId);
+         
 
           Video savedVideo=   videoService.save(video, file);
            if(savedVideo!=null){

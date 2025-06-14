@@ -23,6 +23,8 @@ const Login = ({ setIsLoggedIn }) => {
       if (fetchedUser.password === loginData.password) {
         setMessage({ text: `Welcome, ${fetchedUser.name}!`, type: 'success' });
         setIsLoggedIn(true);
+          // Store userId in localStorage
+       localStorage.setItem("userId", fetchedUser.id);
         navigate('/home');
       } else {
         setMessage({ text: 'Incorrect password.', type: 'error' });

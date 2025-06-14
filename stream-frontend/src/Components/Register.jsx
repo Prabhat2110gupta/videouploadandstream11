@@ -24,6 +24,7 @@ const Register = () => {
     try {
       const response = await axios.post("http://localhost:8080/api/v1/users", userData);
       setMessage({ text: `User ${response.data.name} registered successfully!`, type: 'success' });
+      localStorage.setItem("userId", response.data.id);
       setUserData({ name: '', email: '', password: '', about: '' });
     } catch (error) {
       console.error('Registration failed:', error);

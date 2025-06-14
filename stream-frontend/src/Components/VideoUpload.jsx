@@ -50,6 +50,8 @@ function VideoUpload() {
       formData.append("title", videoMetaData.title);
       formData.append("description", videoMetaData.description);
       formData.append("file", video);
+      const userId = localStorage.getItem("userId") || 1; // fallback to 1 for dev/test
+    formData.append("userId", userId);
 
 
       const response = await axios.post(
