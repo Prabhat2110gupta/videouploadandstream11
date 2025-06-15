@@ -14,7 +14,10 @@ function Home({ setIsLoggedIn }) {
       Logout Button */
         <div className="w-full flex justify-end px-10">
         <button
-          onClick={() => setIsLoggedIn(false)}
+          onClick={() =>  {
+  localStorage.removeItem('token'); // remove JWT
+  setIsLoggedIn(false);             // update state
+}}
           className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
         >
           Logout

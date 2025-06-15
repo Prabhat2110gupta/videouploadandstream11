@@ -12,28 +12,26 @@ const Login = ({ setIsLoggedIn }) => {
     setLoginData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage({ text: '', type: '' });
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setMessage({ text: '', type: '' });
 
-    try {
-      const response = await axios.get(`http://localhost:8080/api/v1/users/email/${loginData.email}`);
-      const fetchedUser = response.data;
+  try {
+    const response = await axios.post('http://localhost:8080/api/auth/login', loginData);
+    const { token } = response.data;
 
-      if (fetchedUser.password === loginData.password) {
-        setMessage({ text: `Welcome, ${fetchedUser.name}!`, type: 'success' });
-        setIsLoggedIn(true);
-          // Store userId in localStorage
-       localStorage.setItem("userId", fetchedUser.id);
-        navigate('/home');
-      } else {
-        setMessage({ text: 'Incorrect password.', type: 'error' });
-      }
+    // Save token and user email to localStorage
+    localStorage.setItem('token', token);
+    localStorage.setItem('email', loginData.email);
+    console.log("JWT Token:", token); 
 
-    } catch (error) {
-      console.error('Login failed:', error);
-      setMessage({ text: 'User not found or server error.', type: 'error' });
-    }
+    setMessage({ text: `Welcome!`, type: 'success' });
+    setIsLoggedIn(true);
+    navigate('/home');
+  } catch (error) {
+    console.error('Login failed:', error);
+    setMessage({ text: 'Invalid email or password.', type: 'error' });
+  }
   };
 
   return (

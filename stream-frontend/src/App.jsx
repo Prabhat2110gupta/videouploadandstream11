@@ -24,24 +24,66 @@
   // }
 
   // export default App;
-  import { useState } from 'react';
+//   import { useState } from 'react';
+// import { Routes, Route, Navigate } from 'react-router-dom';
+// import Home from './Components/Home';
+// import Login from './Components/Login';
+// import Register from './Components/Register';
+
+// function App() {
+//  const [isLoggedIn, setIsLoggedIn] = useState(false); // no localStorage, just in-memory
+
+//   return (
+//     <Routes>
+//       <Route path="/home" element={isLoggedIn ? <Home setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />
+//       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+//       <Route path="/register" element={<Register />} />
+//         {/* <Route path="/home" element={<Home />} /> */}
+//     </Routes>
+//   );
+// }
+import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Components/Home';
 import Login from './Components/Login';
 import Register from './Components/Register';
 
 function App() {
- const [isLoggedIn, setIsLoggedIn] = useState(false); // no localStorage, just in-memory
+  // Initialize login state from localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const token = localStorage.getItem('token');
+    return !!token;
+  });
+
+  // Optional: Sync token state (useful for debugging or token refresh in the future)
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   return (
     <Routes>
-      <Route path="/home" element={isLoggedIn ? <Home setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />
+      <Route
+        path="/home"
+        element={
+          isLoggedIn ? (
+            <Home setIsLoggedIn={() => {
+              localStorage.removeItem("token");
+              setIsLoggedIn(false);
+            }} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/register" element={<Register />} />
-        {/* <Route path="/home" element={<Home />} /> */}
     </Routes>
   );
 }
+
+
 
 export default App;
 
